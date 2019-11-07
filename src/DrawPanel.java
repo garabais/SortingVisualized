@@ -149,6 +149,15 @@ class DrawPanel extends JPanel implements Runnable{
                         case BOZOSORT:
                             BozoSort.sort(this.values, this);
                             break;
+                        case BUCKETSORT:
+                            BucketSort.sort(this.values, this);
+                            break;
+                        case COMBSORT:
+                            CombSort.sort(this.values, this);
+                            break;
+                        case SHELLSORT:
+                            ShellSort.sort(this.values, this);
+                            break;
                     }
                     this.checkSort();
                     this.start = false;
