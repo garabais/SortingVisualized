@@ -7,7 +7,7 @@ public class SelectionSort {
 			int min = i;
 			for (int j = i+1; j < arr.length; j++) {
 				((Value) arr[j]).setComparable();
-				((Value) arr[min]).setColor(Color.BLUE);
+				((Value) arr[min]).setComparable();
 				dp.repaint();
 				dp.sleep();
 				if(arr[min].compareTo(arr[j]) > 0 ){
