@@ -1,5 +1,6 @@
 public class BozoSort {
 
+
     public static void sort(Value[] arr, DrawPanel dp){
         while (!isSorted(arr)){
             int i = (int)(Math.random()*arr.length);
