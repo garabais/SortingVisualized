@@ -6,7 +6,7 @@ class DrawPanel extends JPanel implements Runnable{
 
      private Value[] values;
      private Sorts sort;
-     private boolean start;
+     private boolean start, mode, next;
      private int delay;
 
 
@@ -34,11 +34,38 @@ class DrawPanel extends JPanel implements Runnable{
     }
 
     void sleep() {
-        try {
-            Thread.sleep(this.delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        if (!mode) {
+            try {
+                Thread.sleep(this.delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            while (!next) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            this.next = false;
         }
+
+    }
+
+    String getMode() {
+         return this.mode ? "Steps": "Delay";
+    }
+    void changeMode(){
+         this.mode = !this.mode;
+
+    }
+
+    public void next() {
+         if (start) {
+             this.next = true;
+         }
     }
 
     @Override

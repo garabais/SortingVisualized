@@ -4,25 +4,30 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
+class SettingsPanel extends JPanel implements ActionListener, ChangeListener, ItemListener {
 
-    private JButton start, randomize;
+    private JButton start, randomize, stop, step;
     private DrawPanel dp;
     private JComboBox<? extends Sorts> sorts;
     private JComboBox<Integer> sizes;
+    private JComboBox<String> delayOption;
     private JSpinner delay;
+    private JPanel options;
 
     SettingsPanel(DrawPanel p) {
         this.setPreferredSize(new Dimension(200, 600));
         this.setBackground(new Color(64,64,64));
+        GroupLayout layout = new GroupLayout(this);
 
         this.dp = p;
 
-        JLabel l = new JLabel("Sorts");
-        l.setBackground(Color.gray);
-        l.setForeground(Color.WHITE);
-        this.add(l);
+        JLabel lSorts = new JLabel("Sorts");
+        lSorts.setBackground(Color.gray);
+        lSorts.setForeground(Color.WHITE);
+//        this.add(l);
 
         this.sorts = new JComboBox<>(Sorts.values());
         this.sorts.setForeground(Color.WHITE);
@@ -35,20 +40,20 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
             }
         });
         this.sorts.addActionListener(this);
-        this.sorts.setSelectedItem(this.dp.getSort());
+//        this.sorts.setSelectedItem(this.dp.getSort());
 
-        l.setLabelFor(this.sorts);
-        this.add(this.sorts);
+        lSorts.setLabelFor(this.sorts);
+//        this.add(this.sorts);
 
-        l = new JLabel("Items");
-        l.setBackground(Color.gray);
-        l.setForeground(Color.WHITE);
-        this.add(l);
+        JLabel lItems = new JLabel("Items");
+        lItems.setBackground(Color.gray);
+        lItems.setForeground(Color.WHITE);
+//        this.add(l);
 
         Integer[] sizes = {4,8,25,50,100,200,400,800};
 
         this.sizes = new JComboBox<>(sizes);
-        this.sizes.setSelectedIndex(5);
+//        this.sizes.setSelectedIndex(5);
         this.sizes.setForeground(Color.WHITE);
         this.sizes.setBackground(Color.GRAY);
         this.sizes.setRenderer(new DefaultListCellRenderer() {
@@ -60,11 +65,10 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
         });
         this.sizes.addActionListener(this);
 
-        l.setLabelFor(this.sizes);
-        this.add(this.sizes);
-        JSeparator j = new JSeparator(SwingConstants.VERTICAL);
-        j.setBackground(this.getBackground());
-        this.add(j);
+        lItems.setLabelFor(this.sizes);
+//        this.add(this.sizes);
+
+//        this.add(j);
 
         SpinnerNumberModel model = new SpinnerNumberModel(this.dp.getDelay(), 1, 250, 1);
         this.delay = new JSpinner(model);
@@ -72,32 +76,127 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
         this.delay.getEditor().getComponent(0).setBackground(Color.GRAY);
         this.delay.getEditor().getComponent(0).setForeground(Color.WHITE);
 
-        l = new JLabel("Delay");
-        l.setBackground(Color.gray);
-        l.setForeground(Color.WHITE);
-        this.add(l);
+        JLabel lDelay = new JLabel("Delay");
+        lDelay.setBackground(Color.gray);
+        lDelay.setForeground(Color.WHITE);
+//        this.add(l);
 
         this.delay.getComponent(0).setBackground(Color.LIGHT_GRAY);
         this.delay.getComponent(1).setBackground(Color.LIGHT_GRAY);
 
         this.delay.addChangeListener(this);
 
-        l.setLabelFor(this.delay);
-        this.add(this.delay);
+        lDelay.setLabelFor(this.delay);
+//        this.add(this.delay);
 
         this.randomize = new JButton("Randomize");
         this.randomize.setForeground(Color.WHITE);
         this.randomize.setBackground(Color.GRAY);
         this.randomize.addActionListener(this);
 
-        this.start = new JButton("Sort");
+        this.start = new JButton("Start");
         this.start.setForeground(Color.WHITE);
         this.start.setBackground(Color.GRAY);
         this.start.addActionListener(this);
 
-        this.add(this.randomize);
-        this.add(this.start);
+        this.stop = new JButton("Stop");
+        this.stop.setForeground(Color.WHITE);
+        this.stop.setBackground(Color.GRAY);
+        this.stop.addActionListener(this);
 
+        this.step = new JButton("Next");
+        this.step.setForeground(Color.WHITE);
+        this.step.setBackground(Color.GRAY);
+        this.step.addActionListener(this);
+
+        JPanel sortsp = new JPanel();
+        sortsp.setBackground(this.getBackground());
+        sortsp.add(lSorts);
+        sortsp.add(this.sorts);
+
+        JPanel itemsp = new JPanel();
+        itemsp.setBackground(this.getBackground());
+        itemsp.add(lItems);
+        itemsp.add(this.sizes);
+
+        JPanel buttons = new JPanel();
+        buttons.setBackground(this.getBackground());
+        buttons.add(this.start);
+        buttons.add(this.stop);
+
+        JPanel buttonR = new JPanel();
+        buttonR.setBackground(this.getBackground());
+        buttonR.add(this.randomize);
+
+
+        JPanel selector = new JPanel();
+        selector.setBackground(this.getBackground());
+
+        String[] delayOptions = { "Delay", "Steps" };
+        this.delayOption = new JComboBox<>(delayOptions);
+        this.delayOption.setForeground(Color.WHITE);
+        this.delayOption.setBackground(Color.GRAY);
+        this.delayOption.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public void paint(Graphics g) {
+                setBackground(Color.gray);
+                super.paint(g);
+            }
+        });
+
+        this.delayOption.setEditable(false);
+        this.delayOption.addItemListener(this);
+        selector.add(this.delayOption);
+
+        JPanel d = new JPanel();
+        d.setBackground(this.getBackground());
+        d.add(lDelay);
+        d.add(this.delay);
+
+        JPanel s = new JPanel();
+        s.setBackground(this.getBackground());
+        s.add(this.step);
+
+        options = new JPanel(new CardLayout());
+        options.setBackground(this.getBackground());
+        options.add(d, "Delay");
+        options.add(s, "Steps");
+
+        JPanel delays = new JPanel();
+        delays.setBackground(this.getBackground());
+        delays.add(selector);
+        delays.add(options);
+
+
+//        this.add(this.randomize);
+//        this.add(this.start);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(sortsp)
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(itemsp)
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(buttons)
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(buttonR)
+                        )
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(delays)
+
+                        )
+        );
+
+        this.dp.setSort((Sorts) this.sorts.getSelectedItem());
+        this.dp.reSize((Integer) this.sizes.getSelectedItem());
+        this.dp.setDelay((Integer)this.delay.getValue());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -128,11 +227,27 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
                 this.dp.start();
             }
 
+        } else if (e.getSource() == this.step) {
+            this.dp.next();
         }
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         this.dp.setDelay((Integer)this.delay.getValue());
+
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getSource() == this.delayOption) {
+            CardLayout cl = (CardLayout)(options.getLayout());
+            cl.show(options, (String)e.getItem());
+            if (!((String)e.getItem()).equals(this.dp.getMode())) {
+                this.dp.changeMode();
+            }
+            this.dp.next();
+
+        }
     }
 }
