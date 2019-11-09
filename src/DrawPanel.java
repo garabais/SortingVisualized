@@ -14,8 +14,8 @@ class DrawPanel extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(800, 600));
         this.setBackground(Color.BLACK);
 
-        this.values = new Value[800];
-        randomize();
+        this.reSize(800);
+        this.randomize();
         this.sort = Sorts.MERGESORT;
 
         this.delay = 1;
@@ -26,10 +26,18 @@ class DrawPanel extends JPanel implements Runnable{
     }
 
      void randomize(){
-        Random rd = new Random();
-         for (int i = 0; i < values.length; i++) {
-             this.values[i] = new Value(rd.nextInt(1000));
+
+         for (int i = 0; i < this.values.length; i++){
+             int j = (int)(Math.random()*this.values.length);
+
+             Value aux = this.values[j];
+             this.values[j] = this.values[i];
+             this.values[i] = aux;
          }
+//        Random rd = new Random();
+//         for (int i = 0; i < values.length; i++) {
+//             this.values[i] = new Value(rd.nextInt(1000));
+//         }
          this.repaint();
     }
 
@@ -82,7 +90,11 @@ class DrawPanel extends JPanel implements Runnable{
 
     void reSize(int n) {
          this.values = new Value[n];
-         this.randomize();
+        for (int i = 0; i < this.values.length; i++) {
+            this.values[i] = new Value(i + 1);
+        }
+
+        this.randomize();
          this.repaint();
     }
 
@@ -91,7 +103,7 @@ class DrawPanel extends JPanel implements Runnable{
          int w = this.getWidth() / this.values.length;
 
         for (int i = 0; i < values.length; i++) {
-            this.values[i].draw(g,w*i,w,this.getHeight());
+            this.values[i].draw(g,w*i,w,this.getHeight(), values.length);
         }
     }
 
