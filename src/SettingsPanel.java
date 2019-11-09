@@ -234,10 +234,10 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
             CardLayout cl = (CardLayout)(options.getLayout());
             cl.show(options, (String) this.delayOption.getSelectedItem());
 //            cl.show(options, (String)e.getItem());
-//            if (!((String)e.getItem()).equals(this.dp.getMode())) {
-//                this.dp.changeMode();
-//            }
-            this.dp.changeMode();
+            if (!((String) this.delayOption.getSelectedItem()).equals(this.dp.getMode())) {
+                this.dp.changeMode();
+            }
+//            this.dp.changeMode();
             this.dp.next();
 //            System.out.println("change");
         }
