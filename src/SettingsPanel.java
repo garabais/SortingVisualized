@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-class SettingsPanel extends JPanel implements ActionListener, ChangeListener, ItemListener {
+class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
 
     private JButton start, randomize, stop, step;
     private DrawPanel dp;
@@ -145,7 +145,8 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener, It
         });
 
         this.delayOption.setEditable(false);
-        this.delayOption.addItemListener(this);
+//        this.delayOption.addItemListener(this);
+        this.delayOption.addActionListener(this);
         selector.add(this.delayOption);
 
         JPanel d = new JPanel();
@@ -229,6 +230,16 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener, It
 
         } else if (e.getSource() == this.step) {
             this.dp.next();
+        } else if (e.getSource() == this.delayOption) {
+            CardLayout cl = (CardLayout)(options.getLayout());
+            cl.show(options, (String) this.delayOption.getSelectedItem());
+//            cl.show(options, (String)e.getItem());
+//            if (!((String)e.getItem()).equals(this.dp.getMode())) {
+//                this.dp.changeMode();
+//            }
+            this.dp.changeMode();
+            this.dp.next();
+//            System.out.println("change");
         }
     }
 
@@ -236,18 +247,5 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener, It
     public void stateChanged(ChangeEvent e) {
         this.dp.setDelay((Integer)this.delay.getValue());
 
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        if (e.getSource() == this.delayOption) {
-            CardLayout cl = (CardLayout)(options.getLayout());
-            cl.show(options, (String)e.getItem());
-            if (!((String)e.getItem()).equals(this.dp.getMode())) {
-                this.dp.changeMode();
-            }
-            this.dp.next();
-
-        }
     }
 }
