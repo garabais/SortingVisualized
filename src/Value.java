@@ -18,10 +18,10 @@ public class Value implements Comparable<Value> {
     void setColor(Color c) {
          this.color = c;
     }
-    void draw(Graphics g, int x, int w, int h){
+    void draw(Graphics g, int x, int w, int h, int max) {
         g.setColor(this.color);
 
-        int p = this.value * h / 1000;
+        int p = this.value * h / max;
 
        g.fillRect(x,h -p, w, p);
 
