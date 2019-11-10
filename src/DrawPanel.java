@@ -6,7 +6,7 @@ class DrawPanel extends JPanel implements Runnable{
 
      private Value[] values;
      private Sorts sort;
-     private boolean start;
+     private boolean start, mode, next;
      private int delay;
 
 
@@ -14,8 +14,8 @@ class DrawPanel extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(800, 600));
         this.setBackground(Color.BLACK);
 
-        this.values = new Value[800];
-        randomize();
+        this.reSize(800);
+        this.randomize();
         this.sort = Sorts.MERGESORT;
 
         this.delay = 1;
@@ -26,19 +26,55 @@ class DrawPanel extends JPanel implements Runnable{
     }
 
      void randomize(){
-        Random rd = new Random();
-         for (int i = 0; i < values.length; i++) {
-             this.values[i] = new Value(rd.nextInt(1000));
+
+         for (int i = 0; i < this.values.length; i++){
+             int j = (int)(Math.random()*this.values.length);
+
+             Value aux = this.values[j];
+             this.values[j] = this.values[i];
+             this.values[i] = aux;
          }
+//        Random rd = new Random();
+//         for (int i = 0; i < values.length; i++) {
+//             this.values[i] = new Value(rd.nextInt(1000));
+//         }
          this.repaint();
     }
 
     void sleep() {
-        try {
-            Thread.sleep(this.delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        if (!mode) {
+            try {
+                Thread.sleep(this.delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            while (!next) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            this.next = false;
         }
+
+    }
+
+    String getMode() {
+         return this.mode ? "Steps": "Delay";
+    }
+    void changeMode(){
+         this.mode = !this.mode;
+        System.out.println(this.mode);
+
+    }
+
+    public void next() {
+         if (start) {
+             this.next = true;
+         }
     }
 
     @Override
@@ -54,7 +90,11 @@ class DrawPanel extends JPanel implements Runnable{
 
     void reSize(int n) {
          this.values = new Value[n];
-         this.randomize();
+        for (int i = 0; i < this.values.length; i++) {
+            this.values[i] = new Value(i + 1);
+        }
+
+        this.randomize();
          this.repaint();
     }
 
@@ -63,7 +103,7 @@ class DrawPanel extends JPanel implements Runnable{
          int w = this.getWidth() / this.values.length;
 
         for (int i = 0; i < values.length; i++) {
-            this.values[i].draw(g,w*i,w,this.getHeight());
+            this.values[i].draw(g,w*i,w,this.getHeight(), values.length);
         }
     }
 
@@ -111,6 +151,15 @@ class DrawPanel extends JPanel implements Runnable{
         this.repaint();
     }
 
+    void stop() {
+         this.start = false;
+         this.next();
+         this.repaint();
+    }
+
+    boolean isStoped() {
+         return !this.start;
+    }
     @Override
     public void run() {
         while (true) {
@@ -168,7 +217,9 @@ class DrawPanel extends JPanel implements Runnable{
                             IntroSort.sort(this.values, this);
                             break;
                     }
-                    this.checkSort();
+                    if (this.start) {
+                        this.checkSort();
+                    }
                     this.start = false;
                 }
 
