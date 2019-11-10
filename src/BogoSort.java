@@ -2,6 +2,10 @@ public class BogoSort {
 
     public static void sort(Value[] arr, DrawPanel dp){
         while (!isSorted(arr)){
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             shuffle(arr, dp);
         }
     }
