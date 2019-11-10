@@ -207,6 +207,15 @@ class DrawPanel extends JPanel implements Runnable{
                         case SHELLSORT:
                             ShellSort.sort(this.values, this);
                             break;
+                        case COCKTAILSORT:
+                            CocktailSort.sort(this.values, this);
+                            break;
+                        case PANCAKESORT:
+                            PancakeSort.sort(this.values, this);
+                            break;
+                        case INTROSORT:
+                            IntroSort.sort(this.values, this);
+                            break;
                     }
                     if (this.start) {
                         this.checkSort();

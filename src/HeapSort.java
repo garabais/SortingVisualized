@@ -34,8 +34,7 @@ public class HeapSort {
         }
 
         // If largest is not root
-        if (largest != i)
-        {
+        if (largest != i) {
             arr[i].setComparable();
             arr[largest].setComparable();
             dp.repaint();

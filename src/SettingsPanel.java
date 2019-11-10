@@ -50,10 +50,9 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
         lItems.setForeground(Color.WHITE);
 //        this.add(l);
 
-        Integer[] sizes = {4,8,25,50,100,200,400,800};
+        Integer[] sizes = {4,8,10,25,50,100,200,400,800};
 
         this.sizes = new JComboBox<>(sizes);
-//        this.sizes.setSelectedIndex(5);
         this.sizes.setForeground(Color.WHITE);
         this.sizes.setBackground(Color.GRAY);
         this.sizes.setRenderer(new DefaultListCellRenderer() {
@@ -70,7 +69,7 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
 
 //        this.add(j);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(this.dp.getDelay(), 1, 250, 1);
+        SpinnerNumberModel model = new SpinnerNumberModel(this.dp.getDelay(), 0, 250, 1);
         this.delay = new JSpinner(model);
         int n = this.delay.getComponentCount();
         this.delay.getEditor().getComponent(0).setBackground(Color.GRAY);
