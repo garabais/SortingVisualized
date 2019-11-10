@@ -151,6 +151,13 @@ class DrawPanel extends JPanel implements Runnable{
         this.repaint();
     }
 
+    void stop() {
+         this.start = false;
+    }
+
+    boolean isStoped() {
+         return !this.start;
+    }
     @Override
     public void run() {
         while (true) {
@@ -199,7 +206,9 @@ class DrawPanel extends JPanel implements Runnable{
                             ShellSort.sort(this.values, this);
                             break;
                     }
-                    this.checkSort();
+                    if (this.start) {
+                        this.checkSort();
+                    }
                     this.start = false;
                 }
 

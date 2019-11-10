@@ -200,6 +200,14 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
         this.dp.setDelay((Integer)this.delay.getValue());
     }
 
+    public void clearSizes(){
+        this.sizes.removeAllItems();
+    }
+    public void addSize(Integer i) {
+        this.sizes.addItem(i);
+        this.repaint();
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -211,11 +219,14 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
             }
 
         }  else if (e.getSource() == this.sizes) {
-            if (!this.dp.isRunning()){
-                this.dp.reSize((Integer) this.sizes.getSelectedItem());
-            } else {
-                this.sizes.setSelectedItem(this.dp.getSizes());
+            if (this.sizes.getItemCount() != 0) {
+                if (!this.dp.isRunning()){
+                    this.dp.reSize((Integer) this.sizes.getSelectedItem());
+                } else {
+                    this.sizes.setSelectedItem(this.dp.getSizes());
+                }
             }
+
 
         }else if (e.getSource() == this.randomize) {
             if (!this.dp.isRunning()){
@@ -240,6 +251,9 @@ class SettingsPanel extends JPanel implements ActionListener, ChangeListener {
 //            this.dp.changeMode();
             this.dp.next();
 //            System.out.println("change");
+        } else if (e.getSource() == this.stop) {
+//            System.out.println("stop");
+            this.dp.stop();
         }
     }
 
