@@ -153,6 +153,8 @@ class DrawPanel extends JPanel implements Runnable{
 
     void stop() {
          this.start = false;
+         this.next();
+         this.repaint();
     }
 
     boolean isStoped() {
