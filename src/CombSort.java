@@ -9,11 +9,14 @@ public class CombSort {
             gap = gap >= 1 ? gap : 1;
             change = false;
             for (int i = 0; i < arr.length - gap; i++) {
+                if (dp.isStoped()) {
+                    dp.repaint();
+                    return;
+                }
                 arr[i].setComparable();
                 dp.repaint();
                 dp.sleep();
                 if(arr[i].compareTo(arr[i + gap]) > 0){
-
                     swap(arr, i, i+gap);
                     change = true;
                 }

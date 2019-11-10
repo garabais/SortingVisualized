@@ -1,11 +1,15 @@
 public class InsertionSort {
 
-	public static <E extends Comparable<E>> void sort(E[] arr, DrawPanel dp) {
+	public static void sort(Value[] arr, DrawPanel dp) {
 		for (int i = 1; i < arr.length; i++) {
-			E key = arr[i];
+			Value key = arr[i];
 			int j = i - 1;
 			while (j >= 0 && key.compareTo(arr[j]) < 0) {
-				((Value) arr[j]).setComparable();
+				if (dp.isStoped()) {
+					dp.repaint();
+					return;
+				}
+				arr[j].setComparable();
 				dp.repaint();
 				dp.sleep();
 				arr[j + 1] = arr[j];

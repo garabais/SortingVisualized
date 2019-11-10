@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 public class RadixSort {
 
 	public static Value getMax(Value[] arr) {
@@ -15,6 +13,10 @@ public class RadixSort {
 		int[] count = new int[10];
 		// Store the amount of occurrences in count[]
 		for (int i = 0; i < arr.length; i++) {
+			if (dp.isStoped()) {
+				dp.repaint();
+				return;
+			}
 			arr[i].setComparable();
 			dp.repaint();
 			dp.sleep();
@@ -31,6 +33,10 @@ public class RadixSort {
 		}
 		//Copying aux[] in arr[]
 		for (int i = 0; i < arr.length; i++){
+			if (dp.isStoped()) {
+				dp.repaint();
+				return;
+			}
 			aux[i].setComparable();
 			dp.repaint();
 			dp.sleep();

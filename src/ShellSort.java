@@ -8,7 +8,11 @@ public class ShellSort {
                 int j;
                 //shifting until being sorted
                 for (j = i; j >= gap && arr[j - gap].compareTo(aux) > 0 ; j-= gap) {
-                    ((Value) arr[j]).setComparable();
+                    if (dp.isStoped()) {
+                        dp.repaint();
+                        return;
+                    }
+                    arr[j].setComparable();
                     dp.repaint();
                     dp.sleep();
                     arr[j] = arr[j-gap];
