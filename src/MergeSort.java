@@ -61,41 +61,51 @@ public class MergeSort {
 		int i = start, j = 0, k = 0;
 
 		while (j < l1 && k < l2) {
-			if (dp.isStoped()) {
-				dp.repaint();
-				return;
-			}
+
 			if (arr1[j].compareTo(arr2[k]) < 0) {
-				arr1[j].setComparable();
+				if (!dp.isStoped()) {
+					arr1[j].setComparable();
+				}
+
 				arr[i++] = arr1[j++];
 			} else {
-				arr2[k].setComparable();
+				if (!dp.isStoped()) {
+					arr2[k].setComparable();
+				}
+
 				arr[i++] = arr2[k++];
 			}
 
 			dp.repaint();
-			dp.sleep();
+			if (!dp.isStoped()) {
+				dp.sleep();
+			}
 		}
 
 		while (j < l1) {
-			if (dp.isStoped()) {
-				dp.repaint();
-				return;
+
+
+			arr[i++] = arr1[j];
+			if (!dp.isStoped()) {
+				arr1[j].setComparable();
+				dp.sleep();
 			}
-			arr1[j].setComparable();
-			arr[i++] = arr1[j++];
+			j++;
 			dp.repaint();
-			dp.sleep();
 		}
 		while (k < l2) {
-			if (dp.isStoped()) {
-				dp.repaint();
-				return;
+
+
+			arr[i++] = arr2[k];
+			if (!dp.isStoped()) {
+				arr2[k].setComparable();
+				dp.sleep();
 			}
-			arr2[k].setComparable();
-			arr[i++] = arr2[k++];
 			dp.repaint();
-			dp.sleep();
+			k++;
+
 		}
+
+
 	}
 }
