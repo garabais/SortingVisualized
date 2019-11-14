@@ -216,6 +216,9 @@ class DrawPanel extends JPanel implements Runnable{
                         case INTROSORT:
                             IntroSort.sort(this.values, this);
                             break;
+                        case CYCLESORT:
+                            CycleSort.sort(this.values, this);
+                            break;
                     }
                     if (this.start) {
                         this.checkSort();
