@@ -17,13 +17,11 @@ public class BucketSort {
         int count = 0;
         for (int i = 0; i < bucket.length; i++) {
             for (int j = 0; j < bucket[i]; j++) {
-                if (dp.isStoped()) {
-                    dp.repaint();
-                    return;
+                if (!dp.isStoped()) {
+                    arr[count].setComparable();
+                    dp.sleep();
                 }
-                arr[count].setComparable();
                 dp.repaint();
-                dp.sleep();
                 arr[count++] = new Value(i);
 
             }
