@@ -67,7 +67,7 @@ class DrawPanel extends JPanel implements Runnable{
     }
     void changeMode(){
          this.mode = !this.mode;
-        System.out.println(this.mode);
+//        System.out.println(this.mode);
 
     }
 

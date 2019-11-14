@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class BubbleSort {
 
     public static void sort(Value[] arr, DrawPanel dp) {

@@ -7,6 +7,10 @@ public class CocktailSort {
         while (change){
             change = false;
             for(int i = first; i < last - 1; i++) {
+                if (dp.isStoped()) {
+                    dp.repaint();
+                    return;
+                }
                 arr[i].setComparable();
                 dp.repaint();
                 dp.sleep();
@@ -21,6 +25,10 @@ public class CocktailSort {
             change = false;
             last--;
             for (int i = last - 1; i >= first; i--) {
+                if (dp.isStoped()) {
+                    dp.repaint();
+                    return;
+                }
                 arr[i].setComparable();
                 dp.repaint();
                 dp.sleep();

@@ -7,6 +7,10 @@ public class HeapSort {
             heapify(arr, arr.length, i, dp);
         }
         for (int i = arr.length - 1; i >= 0 ; i--) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[0].setComparable();
             arr[i].setComparable();
             dp.repaint();
@@ -35,6 +39,10 @@ public class HeapSort {
 
         // If largest is not root
         if (largest != i) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[i].setComparable();
             arr[largest].setComparable();
             dp.repaint();
@@ -45,6 +53,10 @@ public class HeapSort {
 
             // Recursively heapify the affected sub-tree
             heapify(arr, lenght, largest, dp);
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
         }
     }
 

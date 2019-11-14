@@ -3,8 +3,12 @@ import java.util.ArrayList;
 public class BucketSort {
 
     public static void sort(Value[] arr, DrawPanel dp) {
-        int[] bucket = new int[1010];
+        int[] bucket = new int[arr.length+1];
         for (int i = 0; i < arr.length; i++) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[i].setComparable();
             dp.repaint();
             dp.sleep();
@@ -13,9 +17,11 @@ public class BucketSort {
         int count = 0;
         for (int i = 0; i < bucket.length; i++) {
             for (int j = 0; j < bucket[i]; j++) {
-                arr[count].setComparable();
+                if (!dp.isStoped()) {
+                    arr[count].setComparable();
+                    dp.sleep();
+                }
                 dp.repaint();
-                dp.sleep();
                 arr[count++] = new Value(i);
 
             }

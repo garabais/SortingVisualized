@@ -18,6 +18,10 @@ public class PancakeSort {
     public static int getMax(Value[] arr, int size, DrawPanel dp) {
         int max = 0;
         for(int i = 0; i < size; ++i) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return max;
+            }
             arr[i].setComparable();
             arr[max].setComparable();
             dp.repaint();
@@ -30,6 +34,10 @@ public class PancakeSort {
     public static void flip(Value[] arr, int i, DrawPanel dp){
         int start = 0;
         while(start < i){
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[i].setComparable();
             arr[start].setComparable();
             dp.repaint();

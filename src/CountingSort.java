@@ -1,18 +1,22 @@
 public class CountingSort {
 
     public static void sort(Value[] arr, DrawPanel dp) {
-        Value[] aux =  new Value[arr.length];
+        Value[] aux =  new Value[arr.length+1];
         //Array of every possible Value
-        int[] count = new int[1000];
+        int[] count = new int[arr.length+1];
         // Store the amount of occurrences in count[]
         for (int i = 0; i < arr.length; ++i) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[i].setComparable();
             dp.repaint();
             dp.sleep();
             ++count[arr[i].getValue()];
         }
         //Changes count[i] to its correspondent position of value in output[]
-        for (int i = 1; i < 1000; ++i) {
+        for (int i = 1; i < aux.length; ++i) {
             count[i] += count[i-1];
         }
         //Create aux array
@@ -22,9 +26,11 @@ public class CountingSort {
         }
         //Copying aux[] in arr[]
         for (int i = 0; i < arr.length; i++){
-            aux[i].setComparable();
+            if (!dp.isStoped()) {
+                aux[i].setComparable();
+                dp.sleep();
+            }
             dp.repaint();
-            dp.sleep();
             arr[i] = aux[i];
         }
     }

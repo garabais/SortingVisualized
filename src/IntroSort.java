@@ -18,7 +18,15 @@ public class IntroSort {
             int partition = partition(arr, first, last, dp);
             // sorts both parts of the partition
             sort(arr, first, partition - 1, limit, dp);
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             sort(arr, partition + 1, last, limit, dp);
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
         }else{
             // if data set is small, does InsertionSort
             insertion(arr, first, last, dp);
@@ -31,6 +39,10 @@ public class IntroSort {
             heapify(arr, i, length, first, dp);
         }
         for (int i = length; i >= 1; i--) {
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             arr[first].setComparable();
             arr[first + 1].setComparable();
             dp.repaint();
@@ -71,6 +83,10 @@ public class IntroSort {
         int small = first-1;
         for (int i = first; i < last; i++) {
             if(arr[i].compareTo(piv) <= 0){
+                if (dp.isStoped()) {
+                    dp.repaint();
+                    return small + 1;
+                }
                 small++;
                 arr[i].setComparable();
                 arr[small].setComparable();
@@ -78,6 +94,10 @@ public class IntroSort {
                 dp.sleep();
                 swap(arr, small, i);
             }
+        }
+        if (dp.isStoped()) {
+            dp.repaint();
+            return small + 1;
         }
         arr[small + 1].setComparable();
         arr[last].setComparable();
@@ -92,6 +112,10 @@ public class IntroSort {
             Value key = arr[i];
             int j = i - 1;
             while (j >= first && key.compareTo(arr[j]) < 0) {
+                if (dp.isStoped()) {
+                    dp.repaint();
+                    return;
+                }
                 arr[j].setComparable();
                 dp.repaint();
                 dp.sleep();

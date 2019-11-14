@@ -2,6 +2,10 @@ public class BozoSort {
 
     public static void sort(Value[] arr, DrawPanel dp){
         while (!isSorted(arr)){
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             int i = (int)(Math.random()*arr.length);
             int j = (int)(Math.random()*arr.length);
             arr[i].setComparable();

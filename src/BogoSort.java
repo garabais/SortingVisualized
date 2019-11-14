@@ -2,6 +2,10 @@ public class BogoSort {
 
     public static void sort(Value[] arr, DrawPanel dp){
         while (!isSorted(arr)){
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             shuffle(arr, dp);
         }
     }
@@ -17,6 +21,10 @@ public class BogoSort {
 
     public static void shuffle(Value[] arr, DrawPanel dp){
         for (int i = 0; i < arr.length; i++){
+            if (dp.isStoped()) {
+                dp.repaint();
+                return;
+            }
             int j = (int)(Math.random()*i);
             arr[i].setComparable();
             arr[j].setComparable();
